@@ -94,3 +94,60 @@ export default bitcoinRate;
 Tout ce qui se trouve au dessus du return sera en javascript et servira à rendre les rendus dynamiques, ce qui se trouve dans le return sera en jsx (très proche du html) pour faire le rendu graphique, le style sera appliqué avec du css classique (sass possible).
 
 Nous allons maintenant voir comment afficher les données de cette api publique (https://api.coindesk.com/v1/bpi/currentprice.json) sur notre application.
+
+Pour commencer nous allons utiliser la fonction useEffect (précédement import). Il s'agit d'un hook effect, cela permet d'executer du code pendant le cycle de vie d'un composant et notamement dans notre cas de récuperer les données et de les mettre à jour régulièrement.
+
+```javascript
+    useEffect(()=>{
+    
+    },[])
+
+```
+
+Le 1er paramètre est une fonction de rappel (un callback) qui sera exécute pour l'effet que vous souhaitez "écouter".<br/>
+Le 2ème est optionnel et permet de définir l'état (state ou props) que l'on souhaite observer.
+
+Nous allons désormais définir une fonction getBtcRate, il s'agira d'une fonction asynchrone qui va utiliser une promesse comme valeur de retour.
+
+```javascript
+    const getBtcRate = async () => {
+
+    };
+
+```
+
+À l'interieur nous allons recupérer les données de l'api grace à la methoge get de axios via un try catch (cela permet "d'essayer du code" et de "catch" une erreur si cela ne fonctionne pas) et les stocker dans une variable temporaire:
+
+
+```javascript
+        const rateTmp = await axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+  
+        } catch (err) {
+            console.error(err.message);
+        }
+```
+
+Nous allons maintenant stocker ces données dans une variable grace à useState (nous allons la déclarer en tout premier dans notre component):
+
+```javascript
+    const [btcRate, setRate]=useState([])
+```
+Ici btcRate correspond à notre variable, setRate à la methode pour en changer la valeur, useState à définir sa valeur lors de la déclaration.
+
+Revenons à la fonction getBtcRate et recupérons les donnée dans notre nouvelle variable: 
+
+```javascript
+    setRate(rateTmp.data);
+```
+
+Il faut maintenant appeler getBtcRate dans notre useEffect:
+
+
+```javascript
+    useEffect(()=>{
+        getBtcRate()
+    },[])
+
+```
+
+
