@@ -150,4 +150,31 @@ Il faut maintenant appeler getBtcRate dans notre useEffect:
 
 ```
 
+Passons à l'affichage des données que nous avons récuperer, cela se passera à l'interieur de la div du return:
 
+```jsx
+       <div>
+            <br/>
+            {btcRate.chartName} rate: 
+            <br/>
+            <br/>
+            Valeur: {btcRate.bpi?btcRate.bpi.EUR.rate:"chargement"}€
+            <br/>
+            Mis à jour le: {btcRate.time?btcRate.time.updated:"chargement"}
+            <br/>
+            <br/>
+        </div>
+
+```
+
+Pour finir nous allons définir une méthode pour mettre à jour les données automatiquement sans avoir à recharger la page dans la fonction useEffect: 
+
+```javascript
+       const interval=setInterval(()=>{
+          getBtcRate()
+         },10000)
+           
+           
+       return()=>clearInterval(interval)
+```
+Vous pouvez maintenant aller sur <a link="">excercices.md</a>
