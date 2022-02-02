@@ -120,6 +120,7 @@ Nous allons désormais définir une fonction getBtcRate, il s'agira d'une foncti
 
 
 ```javascript
+        try {
         const rateTmp = await axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
   
         } catch (err) {
